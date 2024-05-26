@@ -1,0 +1,80 @@
+//- // Created by CTT VNPAY
+
+//- extends layout
+
+//- block content
+//-     h3.title(style='font-size: 24px;')= title
+//-     div.table-responsive
+//-         form#createOrder(action='create_payment_url', method='POST')
+//-             div.form-group(style='font-size: 20px; margin-bottom: 30px;')
+//-                 label(for='amount') Số tiền
+//-                 input.form-control#amount(name='amount', placeholder='Số tiền', value=amount, style='font-size: 20px; padding: 10px;')
+
+//-             div.form-group(style='font-size: 20px; margin-bottom: 30px;')
+//-                 label(for='bankCode') Chọn Phương thức thanh toán:
+//-                 .controls
+//-                     label.radio-inline(style='font-size: 20px; margin-right: 20px;')
+//-                         input(type='radio', name='bankCode', id='defaultPaymentMethod', value='', checked='true', style='margin-right: 5px;')
+//-                         | Cổng thanh toán VNPAYQR
+//-                     label.radio-inline(style='font-size: 20px; margin-right: 20px;')
+//-                         input(type='radio', name='bankCode', id='vnpayqrPaymentMethod', value='VNPAYQR', style='margin-right: 5px;')
+//-                         | Thanh toán qua ứng dụng hỗ trợ VNPAYQR
+//-                     label.radio-inline(style='font-size: 20px; margin-right: 20px;')
+//-                         input(type='radio', name='bankCode', id='vnbankPaymentMethod', value='VNBANK', style='margin-right: 5px;')
+//-                         | Thanh toán qua ATM-Tài khoản ngân hàng nội địa
+//-                     label.radio-inline(style='font-size: 20px;')
+//-                         input(type='radio', name='bankCode', id='intcardPaymentMethod', value='INTCARD', style='margin-right: 5px;')
+//-                         | Thanh toán qua thẻ quốc tế
+
+//-             div.form-group(style='font-size: 20px; margin-bottom: 30px;')
+//-                 label(for='language') Ngôn ngữ
+//-                 .controls
+//-                     label.radio-inline(style='font-size: 20px; margin-right: 20px;')
+//-                         input(type='radio', name='language', id='vnLanguage', value='vn', checked='true', style='margin-right: 5px;')
+//-                         | Tiếng việt
+//-                     label.radio-inline(style='font-size: 20px;')
+//-                         input(type='radio', name='language', id='enLanguage', value='en', style='margin-right: 5px;')
+//-                         | Tiếng anh
+
+//-             button.btn.btn-default#btnPopup(type='submit', style='font-size: 20px; padding: 10px;') Thanh toán
+
+// Created by CTT VNPAY (Mobile Version - Large Fonts and Buttons)
+
+extends layout
+
+block content
+    h3.title(style='font-size: 28px; text-align: center; margin-bottom: 40px;')= title
+
+    form#createOrder(action='create_payment_url', method='POST')
+        div.form-group(style='margin-bottom: 30px;')
+            label(for='amount', style='font-size: 22px;') Số tiền
+            input.form-control#amount(name='amount', placeholder='Số tiền', value=amount, style='font-size: 22px; padding: 15px; width: 100%;')
+
+        div.form-group(style='margin-bottom: 30px;')
+            label(for='bankCode', style='font-size: 22px;') Chọn Phương thức thanh toán:
+            .controls
+                label.radio-inline(style='font-size: 22px; display: block; margin-top: 15px;')
+                    input(type='radio', name='bankCode', id='defaultPaymentMethod', value='', checked='true', style='margin-right: 10px;')
+                    | Cổng thanh toán VNPAYQR
+                label.radio-inline(style='font-size: 22px; display: block; margin-top: 15px;')
+                    input(type='radio', name='bankCode', id='vnpayqrPaymentMethod', value='VNPAYQR', style='margin-right: 10px;')
+                    | Thanh toán qua ứng dụng hỗ trợ VNPAYQR
+                label.radio-inline(style='font-size: 22px; display: block; margin-top: 15px;')
+                    input(type='radio', name='bankCode', id='vnbankPaymentMethod', value='VNBANK', style='margin-right: 10px;')
+                    | Thanh toán qua ATM-Tài khoản ngân hàng nội địa
+                label.radio-inline(style='font-size: 22px; display: block; margin-top: 15px;')
+                    input(type='radio', name='bankCode', id='intcardPaymentMethod', value='INTCARD', style='margin-right: 10px;')
+                    | Thanh toán qua thẻ quốc tế
+
+        div.form-group(style='margin-bottom: 30px;')
+            label(for='language', style='font-size: 22px;') Ngôn ngữ
+            .controls
+                label.radio-inline(style='font-size: 22px; display: block; margin-top: 15px;')
+                    input(type='radio', name='language', id='vnLanguage', value='vn', checked='true', style='margin-right: 10px;')
+                    | Tiếng việt
+                label.radio-inline(style='font-size: 22px; display: block; margin-top: 15px;')
+                    input(type='radio', name='language', id='enLanguage', value='en', style='margin-right: 10px;')
+                    | Tiếng anh
+
+        button.btn.btn-default#btnPopup(type='submit', style='font-size: 24px; padding: 15px; width: 100%;') Thanh toán
+
