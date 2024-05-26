@@ -41,4 +41,9 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-module.exports = { app: app, port: process.env.PORT || "8888" };
+var port = process.env.PORT || "8888"; // Get the port from environment variables or use 8888 as default
+
+// Log the port to the console
+console.log("Server is running on port", port);
+
+module.exports = { app: app, port: port }; // Export the app and port
