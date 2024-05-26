@@ -104,16 +104,13 @@ router.get("/vnpay_return", function (req, res, next) {
   let hmac = crypto.createHmac("sha512", secretKey);
   let signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
 
-  let responseCode;
   if (secureHash === signed) {
     //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-    responseCode = vnp_Params["vnp_ResponseCode"];
+
     res.render("success", { code: vnp_Params["vnp_ResponseCode"] });
   } else {
-    responseCode = "97";
     res.render("success", { code: "97" });
   }
-  res.json({ code: responseCode });
 });
 
 router.get("/vnpay_ipn", function (req, res, next) {
