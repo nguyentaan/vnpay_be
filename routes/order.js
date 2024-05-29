@@ -2,8 +2,6 @@
  * Created by CTT VNPAY
  */
 
-
-
 let express = require('express');
 let router = express.Router();
 let $ = require('jquery');
@@ -15,8 +13,12 @@ router.get('/', function(req, res, next){
     res.render('orderlist', { title: 'Danh sách đơn hàng' })
 });
 
-router.get('/create_payment_url', function (req, res, next) {
-    res.render('order', {title: 'Tạo mới đơn hàng', amount: 10000})
+router.get('/create_payment_url', function(req, res, next) {
+    // Extract the amount from query parameters and convert to VND
+    let usdAmount = parseFloat(req.query.amount);
+    let vndAmount = Math.round(usdAmount * 24000); // Convert USD to VND
+    // Render the order page with the correct amount
+    res.render('order', { title: 'Tạo mới đơn hàng', amount: vndAmount });
 });
 
 router.get('/querydr', function (req, res, next) {
@@ -30,10 +32,7 @@ router.get('/refund', function (req, res, next) {
     let desc = 'Hoan tien GD thanh toan';
     res.render('refund', {title: 'Hoàn tiền giao dịch thanh toán'})
 });
-
-
-router.post('/create_payment_url', function (req, res, next) {
-    
+router.post('/create_payment_url', function(req, res, next) {
     process.env.TZ = 'Asia/Ho_Chi_Minh';
     
     let date = new Date();
@@ -55,7 +54,7 @@ router.post('/create_payment_url', function (req, res, next) {
     let bankCode = req.body.bankCode;
     
     let locale = req.body.language;
-    if(locale === null || locale === ''){
+    if (locale === null || locale === '') {
         locale = 'vn';
     }
     let currCode = 'VND';
@@ -68,11 +67,11 @@ router.post('/create_payment_url', function (req, res, next) {
     vnp_Params['vnp_TxnRef'] = orderId;
     vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + orderId;
     vnp_Params['vnp_OrderType'] = 'other';
-    vnp_Params['vnp_Amount'] = amount * 100;
+    vnp_Params['vnp_Amount'] = amount * 100; // Amount in VND
     vnp_Params['vnp_ReturnUrl'] = returnUrl;
     vnp_Params['vnp_IpAddr'] = ipAddr;
     vnp_Params['vnp_CreateDate'] = createDate;
-    if(bankCode !== null && bankCode !== ''){
+    if (bankCode !== null && bankCode !== '') {
         vnp_Params['vnp_BankCode'] = bankCode;
     }
 
@@ -80,14 +79,15 @@ router.post('/create_payment_url', function (req, res, next) {
 
     let querystring = require('qs');
     let signData = querystring.stringify(vnp_Params, { encode: false });
-    let crypto = require("crypto");     
-    let hmac = crypto.createHmac("sha512", secretKey);
-    let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex"); 
+    let crypto = require('crypto');     
+    let hmac = crypto.createHmac('sha512', secretKey);
+    let signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex'); 
     vnp_Params['vnp_SecureHash'] = signed;
     vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
 
-    res.redirect(vnpUrl)
+    res.redirect(vnpUrl);
 });
+
 
 router.get('/vnpay_return', function (req, res, next) {
     let vnp_Params = req.query;
